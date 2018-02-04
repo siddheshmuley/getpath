@@ -11,10 +11,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import java.util.Map;
-
 public class MainActivity extends AppCompatActivity {
-    Map<Integer,String>map;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,19 +31,19 @@ public class MainActivity extends AppCompatActivity {
                         startButton.setEnabled(false);
                         break;
                     case 1:
-                        tv.setText("zh-CN");
+                        tv.setText("zh-CN zh_CN");
                         startButton.setEnabled(true);
                         break;
                     case 2:
-                        tv.setText("en");
+                        tv.setText("en en_US");
                         startButton.setEnabled(true);
                         break;
                     case 3:
-                        tv.setText("hi");
+                        tv.setText("hi hi_IN");
                         startButton.setEnabled(true);
                         break;
                     case 4:
-                        tv.setText("es");
+                        tv.setText("es es_ES");
                         startButton.setEnabled(true);
                         break;
                 }
