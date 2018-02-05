@@ -4,6 +4,7 @@
     <string name="Heading">获得路径</string>
     <string name="select_translation_language">翻译成:</string>
     <string name="start">开始</string>
+    <string name="wrong_button">错误的翻译</string>
     <string-array name="languages">
         <item>选择语言</item>
         <item>中文</item>

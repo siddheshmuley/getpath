@@ -13,10 +13,10 @@ import java.util.List;
  * Created by Siddhesh on 11/23/2017.
  */
 
-public class MessageAdapter extends ArrayAdapter<com.example.android.getpath.ChatMessage> {
+public class MessageAdapter extends ArrayAdapter<ChatMessage> {
     public Activity activity;
-    public List<com.example.android.getpath.ChatMessage> list;
-    public MessageAdapter(Activity activity, int resource, List<com.example.android.getpath.ChatMessage> list){
+    public List<ChatMessage> list;
+    public MessageAdapter(Activity activity, int resource, List<ChatMessage> list){
         super(activity,resource,list);
         this.activity=activity;
         this.list = list;
@@ -27,7 +27,7 @@ public class MessageAdapter extends ArrayAdapter<com.example.android.getpath.Cha
         ViewHolder holder;
         LayoutInflater inflater=(LayoutInflater)activity.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         int resource=0;
-        com.example.android.getpath.ChatMessage message = getItem(position);
+        ChatMessage message = getItem(position);
         int viewType=message.getId();
         if(viewType==1){
             resource = R.layout.their_message;
@@ -38,8 +38,8 @@ public class MessageAdapter extends ArrayAdapter<com.example.android.getpath.Cha
         convertView=inflater.inflate(resource,parent,false);
         holder=new ViewHolder(convertView);
         convertView.setTag(holder);
-        holder.msg.setText(message.getData());
-
+        holder.msg.setText(message.getMessage());
+        holder.msg2.setText(message.getTranslatedMessage());
         return convertView;
     }
 
@@ -59,9 +59,10 @@ public class MessageAdapter extends ArrayAdapter<com.example.android.getpath.Cha
 
     public class ViewHolder {
         public TextView msg;
-
+        public TextView msg2;
         public ViewHolder(View v) {
-            msg = (TextView) v.findViewById(R.id.message_body);
+            msg = (TextView) v.findViewById(R.id.message_body1);
+            msg2 = (TextView) v.findViewById(R.id.message_body2);
         }
     }
 }

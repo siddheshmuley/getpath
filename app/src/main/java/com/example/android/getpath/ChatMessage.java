@@ -7,17 +7,23 @@ package com.example.android.getpath;
 public class ChatMessage {
     int id;
     String message;
+    String translatedMessage;
 
-    ChatMessage(int id, String message){
+    ChatMessage(int id, String message, String translatedMessage){
         this.id=id;
         this.message=message;
+        this.translatedMessage=translatedMessage;
     }
 
     int getId(){
         return id;
     }
 
-    String getData(){
+    String getMessage(){
         return message;
+    }
+
+    String getTranslatedMessage(){
+        return translatedMessage;
     }
 }

@@ -4,6 +4,7 @@
     <string name="Heading">Obtener Camino</string>
     <string name="select_translation_language">Traducir a:</string>
     <string name="start">comienzo</string>
+    <string name="wrong_button">traducción equivocada</string>
     <string-array name="languages">
         <item>Seleccione el idioma</item>
         <item>Chino</item>

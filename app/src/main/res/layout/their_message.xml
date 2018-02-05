@@ -4,18 +4,42 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingTop="8dp">
-
-    <TextView
+    <LinearLayout
         android:id="@+id/message_body"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_margin="10dp"
+        android:orientation="vertical"
         android:background="@drawable/rounded_orange"
-        android:fontFamily="@font/open_sans"
-        android:maxWidth="240dp"
-        android:padding="8dp"
-        android:text="hello, hello!"
-        android:textColor="#ffffff"
-        android:textSize="16dp" />
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="0dp"
+        android:layout_alignParentRight="false"
+        android:layout_alignParentBottom="true">
+        <TextView
+            android:id="@+id/message_body1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:background="@drawable/rounded_orange"
+            android:fontFamily="@font/open_sans"
+            android:maxWidth="240dp"
+            android:padding="8dp"
+            android:text="hello, hello!"
+            android:textColor="#ffffff"
+            android:textSize="16dp" />
+        <TextView
+            android:id="@+id/message_body2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:background="@drawable/rounded_orange"
+            android:fontFamily="@font/open_sans"
+            android:maxWidth="240dp"
+            android:padding="8dp"
+            android:text="hello, hello!"
+            android:textColor="#ffffff"
+            android:textSize="16dp" />
+    </LinearLayout>
+
 </RelativeLayout>

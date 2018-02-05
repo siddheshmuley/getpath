@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent=new Intent(getApplicationContext(),ChatActivity.class);
                 intent.putExtra("targetLanguage",tv.getText());
                 intent.putExtra("foreignLanguage",foreignLanguage);
+                intent.putExtra("wrong",getString(R.string.wrong_button));
                 startActivity(intent);
             }
         });

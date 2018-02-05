@@ -9,6 +9,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Switch;
@@ -31,7 +32,7 @@ import java.util.Locale;
 public class ChatActivity extends AppCompatActivity {
     ListView lv;
     String url="https://translation.googleapis.com/language/translate/v2?key=AIzaSyDcv4o1yc9WNI6L_U1L8nHxwEna1XQ5zvQ";
-    String query="",encodedQuery="",foreignLanguage="";
+    String query="",encodedQuery="",foreignLanguage="",wrong="";
 
     RequestQueue q;
     FloatingActionButton fab,fab2;
@@ -47,6 +48,7 @@ public class ChatActivity extends AppCompatActivity {
     TextView foreign,myLanguage;
     Switch langSwitch;
     MessageAdapter movieAdapter;
+    Button wrongTranslation;
 
 
     @Override
@@ -59,6 +61,7 @@ public class ChatActivity extends AppCompatActivity {
         fab2=findViewById(R.id.floatingActionButton2);
         intent = getIntent();
         foreignLanguage=intent.getStringExtra("foreignLanguage");
+        wrong=intent.getStringExtra("wrong");
         foreign=findViewById(R.id.foreign_language);
         myLanguage=findViewById(R.id.device_language);
         foreign.setText(foreignLanguage);
@@ -66,7 +69,9 @@ public class ChatActivity extends AppCompatActivity {
         messageList=new ArrayList<ChatMessage>();
         movieAdapter=new MessageAdapter(this,R.layout.my_message,messageList);
         lv.setAdapter(movieAdapter);
-
+        wrongTranslation=findViewById(R.id.wrong);
+        wrongTranslation.setText(wrong);
+        wrongTranslation.setVisibility(View.INVISIBLE);
         loop=findViewById(R.id.loop);
         loop2=findViewById(R.id.loop2);
         line=findViewById(R.id.flatLine);
@@ -195,6 +200,18 @@ public class ChatActivity extends AppCompatActivity {
         });
         //recognizer end
 
+        wrongTranslation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(messageList.size()>0 && messageList.get(messageList.size()-1).getId()==1){
+                    messageList.remove(messageList.size()-1);
+                    movieAdapter.notifyDataSetChanged();
+                    wrongTranslation.setClickable(false);
+                    wrongTranslation.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
+
         Toast.makeText(getApplicationContext(),intent.getStringExtra("targetLanguage"),Toast.LENGTH_SHORT).show();
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -235,12 +252,14 @@ public class ChatActivity extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         try{
                             if(zzz.equals(Locale.getDefault().getLanguage())){
-                                updateListView(1,query);
-                                updateListView(1,response.getJSONObject("data").getJSONArray("translations").getJSONObject(0).getString("translatedText"));
+                                wrongTranslation.setClickable(true);
+                                wrongTranslation.setVisibility(View.VISIBLE);
+                                updateListView(1,query,response.getJSONObject("data").getJSONArray("translations").getJSONObject(0).getString("translatedText"));
                             }
                             else{
-                                updateListView(2,query);
-                                updateListView(2,response.getJSONObject("data").getJSONArray("translations").getJSONObject(0).getString("translatedText"));
+                                wrongTranslation.setClickable(false);
+                                wrongTranslation.setVisibility(View.INVISIBLE);
+                                updateListView(2,query,response.getJSONObject("data").getJSONArray("translations").getJSONObject(0).getString("translatedText"));
                             }
                         }catch (Exception e){
 
@@ -302,8 +321,8 @@ public class ChatActivity extends AppCompatActivity {
         }
     }
 
-    public void updateListView(int pos,String str){
-        messageList.add(new ChatMessage(pos,str));
+    public void updateListView(int pos,String str,String str2){
+        messageList.add(new ChatMessage(pos,str,str2));
         movieAdapter.notifyDataSetChanged();
     }
 }
