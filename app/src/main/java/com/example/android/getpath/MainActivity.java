@@ -12,6 +12,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
+    String foreignLanguage="";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,22 +31,31 @@ public class MainActivity extends AppCompatActivity {
                     case 0:
                         tv.setText("");
                         startButton.setEnabled(false);
+                        startButton.setVisibility(View.INVISIBLE);
                         break;
                     case 1:
                         tv.setText("zh-CN zh_CN");
                         startButton.setEnabled(true);
+                        startButton.setVisibility(View.VISIBLE);
+                        foreignLanguage="简体中文";
                         break;
                     case 2:
                         tv.setText("en en_US");
                         startButton.setEnabled(true);
+                        startButton.setVisibility(View.VISIBLE);
+                        foreignLanguage="English";
                         break;
                     case 3:
                         tv.setText("hi hi_IN");
                         startButton.setEnabled(true);
+                        startButton.setVisibility(View.VISIBLE);
+                        foreignLanguage="हिंदी";
                         break;
                     case 4:
                         tv.setText("es es_ES");
                         startButton.setEnabled(true);
+                        startButton.setVisibility(View.VISIBLE);
+                        foreignLanguage="Español";
                         break;
                 }
             }
@@ -52,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
                 startButton.setEnabled(false);
+                startButton.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -60,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent=new Intent(getApplicationContext(),ChatActivity.class);
                 intent.putExtra("targetLanguage",tv.getText());
+                intent.putExtra("foreignLanguage",foreignLanguage);
                 startActivity(intent);
             }
         });
