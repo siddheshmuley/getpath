@@ -9,7 +9,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Switch;
@@ -43,7 +42,7 @@ public class ChatActivity extends AppCompatActivity {
     SpeechRecognizer recognizer,recognizer2;
     Intent recognitionIntent,recognitionIntent2;
     boolean isListening=false,isListening2=false;
-    ProgressBar loop, line;
+    ProgressBar loop, loop2, line;
     int count=0;
     TextView foreign,myLanguage;
     Switch langSwitch;
@@ -68,27 +67,10 @@ public class ChatActivity extends AppCompatActivity {
         movieAdapter=new MessageAdapter(this,R.layout.my_message,messageList);
         lv.setAdapter(movieAdapter);
 
-        langSwitch = findViewById(R.id.langSwitch);
-
         loop=findViewById(R.id.loop);
+        loop2=findViewById(R.id.loop2);
         line=findViewById(R.id.flatLine);
 
-
-        langSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(b){
-                    myLanguage.setBackgroundResource(R.drawable.unselected_button);
-                    foreign.setBackgroundResource(R.drawable.selected_button);
-                    flipFAB(2);
-                }
-                else{
-                    myLanguage.setBackgroundResource(R.drawable.selected_button);
-                    foreign.setBackgroundResource(R.drawable.unselected_button);
-                    flipFAB(1);
-                }
-            }
-        });
         //recognizer start
         recognizer=SpeechRecognizer.createSpeechRecognizer(this);
         recognitionIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
@@ -278,6 +260,7 @@ public class ChatActivity extends AppCompatActivity {
     public void flipFAB(int x){
         if(x==1){
             fab2.setVisibility(View.INVISIBLE);
+            loop2.setVisibility(View.INVISIBLE);
             fab.setVisibility(View.VISIBLE);
             fab2.setClickable(false);
             if(isListening){
@@ -293,24 +276,29 @@ public class ChatActivity extends AppCompatActivity {
                 fab.bringToFront();
                 fab.setClickable(true);
             }
+            fab2.setVisibility(View.VISIBLE);
+            fab2.setClickable(true);
         }
         else{
             fab.setVisibility(View.INVISIBLE);
+            loop.setVisibility(View.INVISIBLE);
             fab2.setVisibility(View.VISIBLE);
             fab.setClickable(false);
             if(isListening2){
                 fab2.setClickable(false);
                 fab2.setImageResource(0);
-                loop.setVisibility(View.VISIBLE);
-                loop.bringToFront();
+                loop2.setVisibility(View.VISIBLE);
+                loop2.bringToFront();
             }
             else{
                 fab2.setClickable(true);
-                fab2.setImageResource(R.drawable.ic_mic_black_24dp);
-                loop.setVisibility(View.INVISIBLE);
+                fab2.setImageResource(R.drawable.ic_mic_white_24dp);
+                loop2.setVisibility(View.INVISIBLE);
                 fab2.bringToFront();
                 fab2.setClickable(true);
             }
+            fab.setVisibility(View.VISIBLE);
+            fab.setClickable(true);
         }
     }
 

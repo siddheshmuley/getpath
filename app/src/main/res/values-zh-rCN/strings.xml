@@ -6,7 +6,7 @@
     <string name="start">开始</string>
     <string-array name="languages">
         <item>选择语言</item>
-        <item>简体中文</item>
+        <item>中文</item>
         <item>英语</item>
         <item>印地语</item>
         <item>西班牙语</item>
