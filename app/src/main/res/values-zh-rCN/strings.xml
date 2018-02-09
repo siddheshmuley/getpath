@@ -5,11 +5,18 @@
     <string name="select_translation_language">翻译成:</string>
     <string name="start">开始</string>
     <string name="wrong_button">错误的翻译</string>
+    <string name="survey">调查</string>
     <string-array name="languages">
         <item>选择语言</item>
         <item>中文</item>
         <item>英语</item>
+        <item>法国</item>
+        <item>德语</item>
         <item>印地语</item>
+        <item>意大利</item>
+        <item>波斯语</item>
+        <item>俄语</item>
         <item>西班牙语</item>
+        <item>泰米尔人</item>
     </string-array>
 </resources>

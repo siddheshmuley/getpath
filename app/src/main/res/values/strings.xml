@@ -5,11 +5,18 @@
     <string name="select_translation_language">Translate to:</string>
     <string name="start">Start</string>
     <string name="wrong_button">wrong translation</string>
+    <string name="survey">take survey</string>
     <string-array name="languages">
         <item >Select Language</item>
         <item >Chinese</item>
         <item>English</item>
+        <item>French</item>
+        <item>German</item>
         <item>Hindi</item>
+        <item>Italian</item>
+        <item>Persian</item>
+        <item>Russian</item>
         <item>Spanish</item>
+        <item>Tamil</item>
     </string-array>
 </resources>

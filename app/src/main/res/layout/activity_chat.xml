@@ -16,6 +16,7 @@
         android:visibility="invisible"
         />
 
+
     <ListView
         android:id="@+id/chat_view"
         android:layout_width="match_parent"

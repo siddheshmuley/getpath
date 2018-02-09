@@ -5,12 +5,19 @@
     <string name="select_translation_language">में अनुवाद करे:</string>
     <string name="start">प्रारंभ करें</string>
     <string name="wrong_button">गलत अनुवाद</string>
+    <string name="survey">सर्वेक्षण करें</string>
     <string-array name="languages">
         <item >भाषा चुनें</item>
         <item >चीनी</item>
         <item>अंग्रेज़ी</item>
+        <item>फ्रेंच</item>
+        <item>जर्मन</item>
         <item>हिंदी</item>
+        <item>इतालवी</item>
+        <item>फ़ारसी</item>
+        <item>रूसी</item>
         <item>स्पेनिश</item>
+        <item>तामिल</item>
     </string-array>
 </resources>
 

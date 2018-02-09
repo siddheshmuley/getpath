@@ -16,23 +16,28 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONObject;
 
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 public class ChatActivity extends AppCompatActivity {
     ListView lv;
     String url="https://translation.googleapis.com/language/translate/v2?key=AIzaSyDcv4o1yc9WNI6L_U1L8nHxwEna1XQ5zvQ";
-    String query="",encodedQuery="",foreignLanguage="",wrong="";
+    String msurl="https://api.microsofttranslator.com/V2/Http.svc/Translate";
+    String query="",encodedQuery="",foreignLanguage="",wrong="",target="";
 
     RequestQueue q;
     FloatingActionButton fab,fab2;
@@ -62,6 +67,8 @@ public class ChatActivity extends AppCompatActivity {
         intent = getIntent();
         foreignLanguage=intent.getStringExtra("foreignLanguage");
         wrong=intent.getStringExtra("wrong");
+        target=intent.getStringExtra("target");
+
         foreign=findViewById(R.id.foreign_language);
         myLanguage=findViewById(R.id.device_language);
         foreign.setText(foreignLanguage);
@@ -122,8 +129,8 @@ public class ChatActivity extends AppCompatActivity {
             public void onResults(Bundle bundle) {
                 ArrayList<String> matches = bundle.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
                 query=matches.get(0);
-
-                makeRequest(intent.getStringExtra("targetLanguage").split(" ")[0]);
+                makeRequest(2,target);
+                //makeRequest(intent.getStringExtra("targetLanguage").split(" ")[0]);
             }
 
             @Override
@@ -185,7 +192,8 @@ public class ChatActivity extends AppCompatActivity {
             public void onResults(Bundle bundle) {
                 ArrayList<String> matches = bundle.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
                 query=matches.get(0);
-                makeRequest(Locale.getDefault().getLanguage());
+                //makeRequest(Locale.getDefault().getLanguage());
+                makeRequest(1,Locale.getDefault().getLanguage());
             }
 
             @Override
@@ -246,6 +254,7 @@ public class ChatActivity extends AppCompatActivity {
         }
         Log.println(Log.VERBOSE,"success","");
         final String zzz=target;
+
         request=new JsonObjectRequest(Request.Method.GET, url+"&q="+encodedQuery+"&target="+target, null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -272,7 +281,8 @@ public class ChatActivity extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         line.setVisibility(View.INVISIBLE);
                     }
-        });
+                }
+        );
         q.add(request);
     }
 
@@ -324,5 +334,59 @@ public class ChatActivity extends AppCompatActivity {
     public void updateListView(int pos,String str,String str2){
         messageList.add(new ChatMessage(pos,str,str2));
         movieAdapter.notifyDataSetChanged();
+    }
+
+    public void makeRequest(final int i,String target){
+        line.setVisibility(View.VISIBLE);
+        try{
+            encodedQuery=(!target.equals(Locale.getDefault().getLanguage()))?URLEncoder.encode(query,"UTF-8"):query;
+        }
+        catch(Exception e){
+            line.setVisibility(View.INVISIBLE);
+        }
+        Log.println(Log.VERBOSE,"success","");
+        final String zzz=target;
+
+        StringRequest msrequest=new StringRequest(Request.Method.GET,
+                msurl+"?text="+encodedQuery+"&to="+target+"&appid=",
+                new Response.Listener<String>(){
+                    @Override
+                    public void onResponse(String response) {
+                        String x="<string xmlns=\"http://schemas.microsoft.com/2003/10/serialization/\">",y="</string>";
+                        response=response.substring(x.length(),response.length());
+                        response=response.substring(0,response.indexOf(y));
+                        try{
+                            if(i==1){
+                                wrongTranslation.setClickable(true);
+                                wrongTranslation.setVisibility(View.VISIBLE);
+                                updateListView(1,query,response);
+                            }
+                            else{
+                                wrongTranslation.setClickable(false);
+                                wrongTranslation.setVisibility(View.INVISIBLE);
+                                updateListView(2,query,response);
+                            }
+                        }catch (Exception e){
+
+                        }
+                        movieAdapter.notifyDataSetChanged();
+                        line.setVisibility(View.INVISIBLE);
+                    }
+                },
+                new Response.ErrorListener(){
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        line.setVisibility(View.INVISIBLE);
+                    }
+                }
+        ){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Ocp-Apim-Subscription-Key", "28e8d10b37804f3b9f1fba5c313f5ff0");
+                return headers;
+            }
+        };
+        q.add(msrequest);
     }
 }
